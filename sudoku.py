@@ -1,9 +1,5 @@
-import daramg
-from daramg import CheckNumber
+from daramg import CheckNumber, solve
 import copy
-
-print("감자")
-
 
 # 1. 스도쿠 문제 입력
 # p = problem
@@ -50,27 +46,24 @@ a2 = [[6,5,3,7,2,1,4,8,9],
 
 # __main__ 블록
 if __name__ == "__main__":
-    # 원래 문제 출력
-    print("스도쿠 문제:")
-    
+    # 원본 문제 유지
+    p_daramg = copy.deepcopy(p2)
     # 다람쥐 알고리즘 실행
-    p_daramg = copy.deepcopy(p)
-    
-    daramg.solve(p_daramg)
+    solve(p_daramg)
     daram = CheckNumber(p_daramg)
     daram.devide()
     daram.solvee()
     daram.printP()
+#     daram.liflif()
     # 원본이 바뀌었는지 확인
     print(daram.p == p2)  # False여야 원본이 변경되지 않은 것
     
-    # aa = [[0 for i in range(9)] for i in range(9)]
-    # for i in range(9):
-    #     for j in range(9):
-    #         if j+1 == p[j][i]:
-    #             aa[j][i]+=1
-    
-    # for i in aa:
-    #     if 2 in i:
-    #         break
-    #     print(i)
+#     aa=[[]]
+#     if not aa[0]:
+#           print(aa[0])
+    # aa=[[123]]
+    # ppp=[[123],[234],[456]]
+    # d=[1,2,3]
+    # d.append(ppp)
+    # p = d[-1]
+    # print(p)

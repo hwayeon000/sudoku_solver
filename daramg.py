@@ -5,7 +5,7 @@ def solve(p):
 
 
 class CheckNumber:    # 클래스     
-    def __init__(self, p):     
+    def __init__(self, p):
         self.p = p
         self.blank_n = 0 # 빈 숫자 개수
         # col = column
@@ -17,6 +17,7 @@ class CheckNumber:    # 클래스
         self.b = [[] for i in range(9)]
         # 들어갈 수 있는 수
         self.possible_n = [[[] for i in range(9)] for i in range(9)]
+        self.disable_n = [[[] for i in range(9)] for i in range(9)]
       
     # 비교를 위한 분류작업, p, col, box
     def devide(self):
@@ -48,12 +49,19 @@ class CheckNumber:    # 클래스
         compare_n=0
         # 1차 진행
         # 안전핀
-        cccc=100
-        while cccc>0:
+        cccc=30
+        savePoint=[]
+        while cccc>0 or compare_n!=self.blank_n:
             # 변경이 없다면 중단
             if compare_n==self.blank_n:
-                # 임의의 수 체크
-                break
+                # 임의의 수 체크?
+                savePoint=list(random_num(self.possible_n))
+                savePoint.append(self.p)
+                self.p[savePoint[0]][savePoint[1]]=savePoint[2]
+                print("random num check: ", savePoint[2])
+                print(f'check blank : {self.blank_n, cccc}')
+                print("End")
+                # break
             compare_n=self.blank_n
             for i in range(9):
                 for j in range(9):
@@ -68,32 +76,36 @@ class CheckNumber:    # 클래스
                             self.blank_n-=1 # 빈 곳이 채워지면 빼기
                     else:
                         self.possible_n[i][j]=[self.p[i][j]]
+            print("last----check", cccc)
             cccc-=1
-            print("last----check", self.blank_n)
             if checkList(self.p, self.col, self.b, self.possible_n) < 0:
-                print
-                break
-
-
-        
-
-
-
-
-
-
+                # 모순 발생 시 -1, 되돌리기
+                self.p=savePoint[3]
+                self.disable_n[savePoint[0]][savePoint[1]]=savePoint[2]
+                self.possible_n[savePoint[0]][savePoint[1]].remove(savePoint[2])
+                savePoint.clear()
+                # random_num(self.possible_n)
+                # break
 
 
 
     def printP(self):
-        print(f'check blank : {self.blank_n}')
         for row in self.possible_n:
         # for row in self.possible_n:
             print(row)
 
+
 #   - 가능한 수의 집합(possible_n)에서 수 n 하나씩 대입
 #   - 불가능(모순 발생 시) 하면 n 제거, 되돌리기(p->devide, blank_n)
-#       list: [[n, blank_n, p],[n, blank_n, p],..[]]
+#       list: [[i, j, n, p],[i, j, n, p],..[]]
+def random_num(pos):
+    print("random num")
+    for i in range(9):
+        for j in range(9):
+            if len(pos[i][j])>1:
+                n=pos[i][j][-1]
+                return i, j, n
+
 #       모순 : 동일 가능 수 중복
 def checkList(pro, col, box, pos):
     print("CheckLsit")
@@ -104,7 +116,7 @@ def checkList(pro, col, box, pos):
     for i in range(9):
         for j in range(9):
             if len(pos[i][j])==0:
-                print("None")
+                print("가능한 수 0")
                 return -1
             if j+1 in pro[i]:
                 c_row[i][j] += 1
@@ -119,5 +131,5 @@ def checkList(pro, col, box, pos):
             print("모순발생")
             return -1
         else:
-            print("문제 없음")
+            print("모순 없음")
             return 1
