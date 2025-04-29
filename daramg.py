@@ -136,3 +136,9 @@ def checkList(pro, col, box, pos):
         
 
 # 되나?
+# testtest# 되나?
+# testtest# 되나?
+# testtest# 되나?
+# testtest# 되나?
+# testtest# 되나?
+# testtest
