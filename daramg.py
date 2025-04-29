@@ -133,3 +133,6 @@ def checkList(pro, col, box, pos):
         else:
             print("모순 없음")
             return 1
+        
+
+# 되나?
