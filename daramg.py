@@ -1,6 +1,11 @@
 
 def solve(p):
     print("다람쥐")
+    print("도토리 바보야")
+    print("도토리 바보야")
+    print("도토리 바보야")
+    print("도토리 바보야")
+    print("도토리 바보야")
     pass
 
 
